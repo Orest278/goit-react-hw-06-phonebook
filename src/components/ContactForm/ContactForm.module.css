@@ -1,0 +1,9 @@
+.btnAddContact{
+padding: 8px;
+background-color:beige;
+justify-content: center;
+display: block;
+text-align: center;
+margin: auto;
+margin-top: 10px;
+}
