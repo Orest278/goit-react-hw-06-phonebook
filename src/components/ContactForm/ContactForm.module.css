@@ -7,3 +7,8 @@ text-align: center;
 margin: auto;
 margin-top: 10px;
 }
+
+.fomSubmit{
+    display: grid;
+    justify-content: center;
+}

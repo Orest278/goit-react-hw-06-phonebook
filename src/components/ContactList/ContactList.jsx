@@ -1,37 +1,22 @@
-import React from "react";
-import PropTypes from 'prop-types'
+import ContactItem from 'components/ContactItem/ContactItem';
+import { useSelector } from 'react-redux';
+import { getContacts, getFilter } from '../../redux/selectors';
 import s from './ContactLlist.module.css'
 
-const ContactList = ({ contacts, handleDelete }) => (
-  <ul className={s.listContact}>
-    {contacts.map((contact) => (
-      <ContactListItem key={contact.id} contact={contact} handleDelete={handleDelete} />
-    ))}
-  </ul>
-);
+function ContactList() {
+  const contacts = useSelector(getContacts);
+  const filterWord = useSelector(getFilter);
+  const visibleContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filterWord)
+  );
 
-const ContactListItem = ({ contact, handleDelete }) => {
-  const handeleDeleteClick = () => {
-    handleDelete(contact.id)
-  };
-  return(
-  <li className={s.lineContact}>
-    {contact.name} - {contact.number}
-    <button className={s.btnDelete} onClick={handeleDeleteClick}>Delete</button>
-  </li>
-);
+  return (
+    <ul className={s.listContact}>
+      {visibleContacts.map(({ name, id, number }) => (
+        <ContactItem id={id} key={id} number={number} name={name} />
+      ))}
+    </ul>
+  );
 }
-  
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  handleDelete: PropTypes.func.isRequired,
-};
 
 export default ContactList;
